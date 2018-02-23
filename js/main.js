@@ -27,10 +27,9 @@ class Firework {
         ctx.fill();
         ctx.restore();
         ctx.save();
-        ctx.fillStyle = "rgba(255,128,150,0.3)";
+        ctx.fillStyle = "rgba(255,228,150,0.1)";
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r + 3 * Math.random() + 1, 0, 2 * Math.PI);
-        // ctx.fillRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+        ctx.arc(this.x, this.y, this.r + 2 * Math.random() + 1, 0, 2 * Math.PI);
         ctx.fill();
         ctx.restore();
     }
@@ -39,7 +38,7 @@ class Firework {
         if (Math.abs(this.moveX) >= Math.abs(this.targetX)) {  //如烟花运动距离超过出发点与目标点间的距离
             this.isDead = true;
         } else {   //否则继续运动
-            this.speedX = this.speedX * 0.99;
+            this.speedX = this.speedX * 0.99;  //使速度逐渐变慢
             this.speedY = this.speedY * 0.99;
             this.x = this.x + this.speedX;
             this.y = this.y + this.speedY;
@@ -72,7 +71,7 @@ function getRandom(a, b) {   //获取随机数
 
 function animate() {
     ctx.save();
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
     if (fireworks.length) {
