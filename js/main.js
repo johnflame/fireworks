@@ -51,9 +51,8 @@ class Firework {
                   g = parseInt(getRandom(0,255)),
                   b = parseInt(getRandom(0,255));
             const color = `rgba(${r},${g},${b},1)`         //每一火花的颜色都随机
-           
             const a = getRandom(-Math.PI, Math.PI);  //以爆炸点为圆心，360度内，半径为火花数量的园内随机一个位置为火花的最终位置
-            const length = getRandom(0, sparkNum);
+            const length = getRandom(0, 255);
             const endX = length * Math.cos(a) + this.x;
             const endY = length * Math.sin(a) + this.y;
             const spark = new Firework(this.x, this.y, radius, color, { x: endX, y: endY }); //生成火花
@@ -75,14 +74,14 @@ function animate() {
 
     if (fireworks.length) {
         fireworks.forEach(function (firework, index) {
+            const that = firework;
             if (firework.isDead === true) {
                 if (!firework.sparks.length) {
                     firework.explode();
                 } else {
                     firework.sparks.forEach(function (spark, index) {
-                        if (spark.isDead === true) {
-
-                            // fireworks.splice(indexOf(firework),1)
+                        if (spark.isDead === true & index === firework.sparks.length-1) {
+                             fireworks.splice(fireworks.indexOf(that),1)
                         } else {
                             spark.paint();
                             spark.move();
@@ -106,13 +105,15 @@ function animate() {
 //     fireworks.push(fireworks)
 //   })
 document.addEventListener('DOMContentLoaded', function () {
-
+setInterval(function (){
     let startX = getRandom(canvas.width / 6, canvas.width * 5 / 6);
     let startY = canvas.height;
     let endX = getRandom(canvas.width / 6, canvas.width * 5 / 6);
     let endY = getRandom(canvas.height / 5, canvas.height / 4);
     const firework = new Firework(startX, startY, 5, '#fff', { x: endX, y: endY });
     fireworks.push(firework);
+},500)
+   
 
     animate();
 })
